@@ -11,9 +11,15 @@ class Baseball {
     var secretNum: [Int] {
         var numSet = Set<Int>()
         while numSet.count < NameSpace.numLength {
-            numSet.insert(Int.random(in: 1...9))
+            numSet.insert(Int.random(in: 0...9))
         }
-        let numArr: [Int] = numSet.map { $0 }
+        var numArr: [Int] = numSet.map { $0 }
+        if numArr[0] == 0 {
+            let randIndex = Int.random(in: 1..<NameSpace.numLength)
+            let temp = numArr[0]
+            numArr[0] = numArr[randIndex]
+            numArr[randIndex] = temp
+        }
         return numArr
     }
     
