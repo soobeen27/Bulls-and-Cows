@@ -6,21 +6,29 @@
 //
 
 import Foundation
-
-print("< 게임을 시작합니다 >")
-let baseball = Baseball()
-let secretNum = baseball.secretNum
+print(NameSpace.initialMessage)
+var baseBall = Baseball()
 while true {
-    do {
-        print("입력: ",terminator: "")
-        let answer = try baseball.getAnswer()
-        let result = baseball.compareNums(secret: secretNum, answer: answer)
-        print(result.gameStatus)
-        if result.score {
-            break
-        }
-    } catch GetAnswerError.wrongInput {
-        print(NameSpace.wrongInputMessage)
+    print("입력: ",terminator:"")
+    guard let input = readLine() else 
+    { print("올바른 숫자를 입력해주세요!")
         continue
     }
+    switch input {
+    case "1":
+        baseBall.gameStart()
+        continue
+    case "2":
+        baseBall.checkPlayingCount()
+        continue
+    case "3":
+        print("< 숫자 야구 게임을 종료합니다 >")
+        break
+    default:
+        print("올바른 숫자를 입력해주세요.")
+        continue
+    }
+    break
 }
+
+
