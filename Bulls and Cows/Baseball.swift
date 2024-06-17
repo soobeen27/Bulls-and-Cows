@@ -11,22 +11,13 @@ struct Baseball {
     private var playCount: [Int] = []
     private var countIndex: Int = 0
     private var tryCount = 0
-    
-    private var secretNum: [Int] {
-        var numSet = Set<Int>()
-        while numSet.count < NameSpace.numLength {
-            numSet.insert(Int.random(in: 0...9))
-        }
-        var numArr: [Int] = numSet.map { $0 }
-        if numArr[0] == 0 {
-            let randIndex = Int.random(in: 1..<NameSpace.numLength)
-            let temp = numArr[0]
-            numArr[0] = numArr[randIndex]
-            numArr[randIndex] = temp
-        }
-        return numArr
+
+// MARK: - 랜덤값 주기
+    private var secretNum:[Int] {
+        let arr = Array(0...9)
+        return arr[0] == 0 ? Array(arr[1...3]) : Array(arr[0...2])
     }
-    
+// MARK: - 입력값 받기
     private func getAnswer() throws -> [Int]{
         guard let input = readLine() else { throw GetAnswerError.wrongInput }
         var nums = [Int]()
@@ -42,7 +33,7 @@ struct Baseball {
         }
         return nums
     }
-    
+ // MARK: - 숫자 비교
     mutating func compareNums(secret: [Int],answer: [Int]) -> (score: Bool, gameStatus :String) {
         var strike = 0
         var ball = 0
@@ -73,9 +64,11 @@ struct Baseball {
         return (false , statusMessage)
     }
     
+    // MARK: - 게임 시작
     mutating func gameStart() {
         print("< 게임을 시작합니다 >")
         let secretNum = secretNum
+        print(secretNum)
         while true {
             do {
                 print("입력: ",terminator: "")
@@ -94,7 +87,7 @@ struct Baseball {
             }
         }
     }
-    
+    // MARK: - 게임 플레이 횟수 카운트
     func checkPlayingCount() {
         if countIndex == 0 {
             print("아직 게임 기록이 없습니다.")
